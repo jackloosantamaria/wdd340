@@ -4,3 +4,131 @@
 *:after {
   box-sizing: border-box;
 }
+
+/***********Header*****************/
+
+#top-header{
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.siteName a{
+  text-decoration: none;
+  color: black;
+  font-size: 2.3em;
+}
+
+#tools a{
+  text-decoration: none;
+  color: black;
+}
+
+h1{
+  font-size: 20px;
+}
+
+/*******NAV*********/
+
+
+nav ul{
+  display: flex;
+  list-style-type: none;
+  background-color: black;
+  color: white;  
+  flex-direction: row;
+  justify-content: center;
+  padding: 0;
+}
+
+nav li{
+  
+  flex: 1; /*space between each button*/
+  padding: 10px;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*************Hero Text***************************/
+
+.hero{
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+#heroParagraph{
+  /* padding: 20px; */
+  position: absolute;
+  /* top: -10%;
+  left: -5%; */
+  width: 35%;
+  height: 66%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+}
+
+#titleHero{
+  font-size: 15px;
+  color: aqua;
+}
+
+#heroParagraph li{
+  list-style-type: none;
+  color: aqua;
+}
+
+#heroParagraph ul{
+  padding: 0;
+  margin: 0;
+}
+
+#heroParagraph img{
+  transform: scale(0.4);
+  margin-top: -20px;
+  margin-left: -71px;
+}
+
+
+/*******Parragraph************/
+
+h2{
+  font-size: 18px;
+}
+
+#pList{
+  font-size: 14.5px;
+
+}
+
+#pList li{
+  padding: 10px;
+}
+
+/***************Delorean Upgrades********************/
+
+.gridContainer{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.smallImages{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: aqua;
+}
+
+.smallImages img{
+  margin-bottom: 10px;
+}
+
+.smallImages a{
+  display: block;
+ color: black;
+}
+
