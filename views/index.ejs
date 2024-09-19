@@ -1,25 +1,29 @@
-<body>
-    <h1>Welcome to CSE Motors!</h1>
-    <main>
-        <div class="hero">
-            <div id="heroParagraph">
-                <h2 id="titleHero">
-                    DMC Delorean
-                </h2>
 
-                <ul>
-                    <li>3 Cup holders</li>
-                    <li>Superman doors</li>
-                    <li>Fuzzy dicel</li>
-                </ul>
-                <img src="images/site/own_today.png" alt="">
-            </div>
-            <img 
-            src="images/vehicles/delorean.jpg"
-            srcset="images/vehicles/delorean.jpg 600w" 
-            alt="hero image">
+<h1>Welcome to CSE Motors!</h1>
+
+    <div class="hero">
+        <div id="heroParagraph">
+            <h2 id="titleHero">
+                DMC Delorean
+            </h2>
+
+            <ul>
+                <li>3 Cup holders</li>
+                <li>Superman doors</li>
+                <li>Fuzzy dicel</li>
+            </ul>
+            <img src="images/site/own_today.png" alt="">
         </div>
 
+        <div class="hero-image">
+            <picture>
+                <source srcset="images/vehicles/delorean-tn.jpg" media="(max-width: 400px)">
+                <img src="images/vehicles/delorean.jpg" alt="hero image">
+            </picture>
+        </div>
+    </div>
+
+    <div id="h2Column">
         <div id="reviews">
             <h2>
                 DMC Delorean Reviews
@@ -59,5 +63,5 @@
                 </div>
             </div>
         </div>
-    </main>
-</body>
+    </div>
+
