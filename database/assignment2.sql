@@ -33,3 +33,5 @@ SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interi
 UPDATE inventory
 SET inv_thumbnail = REPLACE(inv_thumbnail, 'images/', 'images/vehicles/'),
 	inv_image = REPLACE(inv_image, 'images/', 'images/vehicles/');
+
+--video https://www.youtube.com/watch?v=QHBuqwXIIAs
