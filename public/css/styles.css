@@ -74,13 +74,13 @@ nav li{
 
 #titleHero{
   font-size: 15px;
-  color: aqua;
+  color: darkcyan;
   font-weight: bold;
 }
 
 #heroParagraph li{
   list-style-type: none;
-  color: aqua;
+  color: darkcyan;
   font-weight: bold;
   font-size: 13px;
 }
