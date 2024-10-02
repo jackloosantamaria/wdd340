@@ -136,6 +136,35 @@ h2{
  color: black;
 }
 
+
+
+/***********************
+
+Vehicle description...images
+
+*************************/
+
+.vehicle-image img{
+  max-width: 100%;
+  height: auto;
+  display: block; /**No space below the image***/
+}
+
+#inv-display {
+  display: flex; /* This makes the parent a flex container */
+  flex-wrap: wrap; /* Allows items to wrap to the next line if necessary */
+  list-style-type: none; /* Removes bullet points from the list */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+}
+
+
+/**************************
+
+Desktop View
+
+***************************/
+
 @media screen and (min-width: 500px){
 
   body{
@@ -251,6 +280,46 @@ h2{
     margin: 0;
     padding: 0;
   }
+
+  #inv-display {
+    display: flex; /* This makes the parent a flex container */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if necessary */
+    list-style-type: none; /* Removes bullet points from the list */
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+  }
+  
+  #inv-display li {
+    /* display: flex;  */
+    flex: 1 0 21%; /* Adjust basis for responsive design */
+    margin: 10px; /* Add space between items */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+    text-align: center; /* Center align content inside the item */
+  }
+  
+  .namePrice{
+   
+    text-align: center;
+  }
+
+
+  /*********************
+  
+  Vehicle Details
+  
+  **********************/
+
+  .vehicle-details{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-gap: 5px; */
+  }
+
+  .image-container{
+    grid-row: 1/7;
+  }
+
+
 
 }
 
