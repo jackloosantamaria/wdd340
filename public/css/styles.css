@@ -45,6 +45,12 @@ nav li{
   
   flex: 1; /*space between each button*/
   padding: 10px;
+  
+}
+
+nav a{
+  color: white;
+  text-decoration: none;
 }
 
 
