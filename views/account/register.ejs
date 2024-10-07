@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+</head>
+<body>
+    <h1><%= title %></h1>
+
+  
+    <% if (errors) { %>
+        <ul class="notice">
+       <% errors.array().forEach(error => { %>
+         <li><%= error.msg %></li>
+      <%  }) %>
+       </ul>
+      <% } %>
+  
+
+    <form action="/account/register" method="POST">
+        <div class="divForm">
+            <label for="account_firstname">First Name:</label>
+            <input type="text" id="account_firstname" name="account_firstname" required>
+        </div>
+
+        <div class="divForm">
+            <label for="account_lastname">Last Name:</label>
+            <input type="text" id="account_lastname" name="account_lastname" required>            
+        </div>
+        
+        <div class="divForm">
+            <label for="account_email">Email Address:</label>
+            <input type="email" id="account_email" name="account_email" required placeholder="Enter a valid email address">
+        </div>
+
+        <div class="divForm">
+            <label for="account_password">Password:</label>
+            <input type="password" id="account_password" name="account_password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{12,}$" required>
+        </div>
+
+        <p>Password must be at least 12 characters long, contain at least 1 capital letter, 1 number, and 1 special character.</p>
+
+        <div class="divForm">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+
+</body>
+</html>
