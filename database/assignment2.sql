@@ -18,6 +18,9 @@ WHERE account_id = 1;
 DELETE FROM account
 WHERE account_id = 1;
 
+DELETE FROM account
+WHERE account_id IN (9,10,11,12,13);
+
 --5
 SELECT classification_name, inv_make, inv_model
 FROM public.inventory INNER JOIN public.classification ON inventory.classification_id= classification.classification_id
