@@ -367,7 +367,10 @@ Desktop View
     grid-row: 1/7;
   }
 
-
+  nav ul{
+    display: flex;
+    justify-content: center;
+  }
 
 }
 
