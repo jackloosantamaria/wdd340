@@ -3,6 +3,7 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 
+
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
 
@@ -15,5 +16,14 @@ router.get("/error500", (req, res, next) =>{
     error.status = "Server Error";
     next(error);
 })
+
+//New routes for adding classifications
+router.get('/', invController.buildManagement);
+
+router.get("/add-classification", invController.addClassification);
+router.post("/add-classification", invController.processAddClassification);
+
+router.get("/add-inventory", invController.addInventory);
+router.post("/add-inventory", invController.processAddInventory);
 
 module.exports = router;

@@ -148,3 +148,6 @@ app.use(async (err, req, res, next) => {
       nav
   });
 });
+
+//Favicon
+app.get('/favicon.ico', (req, res) => res.status(204).end());
