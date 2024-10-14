@@ -4,6 +4,7 @@ const utilities = require(".")
   const validate = {}
 
 
+
   /*  **********************************
   *  Registration Data Validation Rules
   * ********************************* */
@@ -68,6 +69,26 @@ const utilities = require(".")
 
 
 
+  /* ******************************
+ * Login Data Validation Rules
+ * ***************************** */
+validate.loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("Please provide a valid email address."),
+
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Password cannot be empty."),
+  ];
+};
+
+
+
 
   /* ******************************
  * Check data and return errors or continue to registration
@@ -90,5 +111,24 @@ validate.checkRegData = async (req, res, next) => {
     }
     next()
   }
+
+  /* ******************************
+ * Check data and return errors or continue to login
+ ***************************** */
+validate.checkLoginData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      let nav = await utilities.getNav();
+      res.render("account/logins", {
+          errors,
+          title: "Login",
+          nav,
+          account_email: req.body.account_email, // Preserve email input
+      });
+      return;
+  }
+  next();
+};
+
   
   module.exports = validate

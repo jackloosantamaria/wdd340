@@ -1,11 +1,15 @@
 //importing modules
 
-const regValidate = require('../utilities/account-validation')
+const regValidate = require('../utilities/account-validation');
 const express = require('express');
 const router = express.Router();
 const {handleErrors} = require('../utilities');
 const accountsController = require('../controllers/accountsController');
 const utilities = require("../utilities")
+
+
+//Define GET router for my account
+router.get('/', utilities.checkLogin, utilities.handleErrors(accountsController.getAccountManagementView));
 
 //Define GET router for "My Account"
 router.get('/login', accountsController.buildLogin);
@@ -19,7 +23,7 @@ router.post('/register',
     utilities.handleErrors(accountsController.registerAccount))
 
 //Add error handling middleware
-router.use((err, res, next) => {
+router.use((err, req, res, next) => {
     handleErrors(err, req, res);
 });
 
@@ -27,8 +31,11 @@ router.use((err, res, next) => {
 // Process the login attempt
 router.post(
     "/login",
-    (req, res) => {
-      res.status(200).send('login process')
-    }
+    regValidate.loginRules(),
+    regValidate.checkLoginData,
+    utilities.handleErrors(accountsController.accountLogin)
+    // (req, res) => {
+    //   res.status(200).send('login process')
+    // }
   )
 module.exports = router;
