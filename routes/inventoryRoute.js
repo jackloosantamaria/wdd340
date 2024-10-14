@@ -28,5 +28,8 @@ router.post("/add-classification", invController.processAddClassification);
 router.get("/add-inventory", invController.addInventory);
 router.post("/add-inventory", invController.processAddInventory);
 
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView));
+router.post("/update/", utilities.handleErrors(invController.updateInventory));
+
 
 module.exports = router;

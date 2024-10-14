@@ -130,5 +130,26 @@ validate.checkLoginData = async (req, res, next) => {
   next();
 };
 
+
+//Check Data and return errors or continue
+// async function checkUpdateData(req, res, next){
+//   const {inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id} = req.body
+//   let errors = []
+//   errors = validationResult(req)
+//   if (!errors.isEmpty()) {
+//     let nav = await utilities.getNav()
+//     const classificationList = await utilities.buildClassificationList(classification_id)
+//     return res.render("inventory/updateInventory", {
+//       errors,
+//       title: "Registration",
+//       nav,
+//       account_firstname,
+//       account_lastname,
+//       account_email,
+//     })
+//     return
+//   }
+//   next()
+// }
   
   module.exports = validate
