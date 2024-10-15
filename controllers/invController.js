@@ -97,7 +97,15 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
 
   if (!data || data.length === 0) {
-    return res.status(404).send("No inventory found for this classification.");
+
+    //res.status(404).send("No inventory found for this classification.");
+    let nav = await utilities.getNav(); // Get navigation
+        return res.render("./inventory/no-inventory", { // Render a 'no inventory' view
+            title: "No Inventory Found",
+            nav,
+            errors: null,
+            message: "No inventory found for this classification." // Custom message
+        });
   }
 
 
@@ -262,6 +270,55 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
+//Build and deliver the delete confirmation view
+invCont.confirmDelete = async (req, res) => {
+  const inv_id = parseInt(req.params.inv_id);
+  const nav = await utilities.getNav();
 
+  try{
+    const inventoryItem = await invModel.getVehicleById(inv_id);
+    if (!inventoryItem) {
+      return res.status(404).send("Vehicle not found");
+    }
+
+    const name = `${inventoryItem.inv_make} ${inventoryItem.inv_model}`;
+
+    res.render("inventory/delete-confirm", {
+      title: `Confirm Deletetion of ${name}`,
+      nav,
+      messages: req.flash('info'),
+      inv_make: inventoryItem.inv_make,
+      inv_model: inventoryItem.inv_model,
+      inv_year: inventoryItem.inv_year,
+      inv_price: inventoryItem.inv_price,
+      inv_id: inventoryItem.inv_id
+    });
+  }catch (error){
+    console.log(error);
+    next(error);
+  }
+}
+
+
+//process the deletion of the inventory item
+invCont.processDelete = async (req, res) => {
+  const inv_id = parseInt(req.body.inv_id);
+
+  try{
+    const result = await invModel.deleteInventoryItem(inv_id)
+
+    if (result){
+      req.flash("info", "The item has been deleted successfully.");
+      res.redirect("/inv");
+    }else{
+      req.flash("error", "Failed to delete the item. Please try again.");
+      res.redirect(`/inv/delete/${inv_id}`);
+    }
+  }catch (error){
+    console.error(error);
+    req.flash("error", "An error occurred while trying to delete the item.");
+    res.redirect(`/inv/delete/${inv_id}`);
+  }
+}
 
 module.exports = invCont
