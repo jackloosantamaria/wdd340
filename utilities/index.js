@@ -138,16 +138,34 @@ Util.checkJWTToken = (req, res, next) => {
  /* ****************************************
  *  Check Login
  * ************************************ */
+ //Util.checkLogin = (req, res, next) => {
+  // if (res.locals.loggedin) {
+  //   next()
+  // } else {
+  //   req.flash("notice", "Please log in.")
+  //   return res.redirect("/account/login")
+  // }
+ //}
+
  Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    next()
-  } else {
-    req.flash("notice", "Please log in.")
-    return res.redirect("/account/login")
+  if (!req.session.user) {
+      req.flash('error', 'You must log in to view this page.');
+      return res.redirect('/account/login');
   }
- }
+  next();
+};
 
+//Middleware to check type of account
+Util.checkAccountType = (req, res, next) => {
+  const accountData = res.locals.accountData;
 
+  if (accountData && (accountData.account_type === 'Employee' || accountData.account_type === 'Admin')) {
+    return next();
+  }else{
+    req.flash('error', 'You do not have permission to access this resource.');
+    return res.redirect('/')
+  }
+}
 
 
 /* ****************************************

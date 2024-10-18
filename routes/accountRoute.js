@@ -23,9 +23,9 @@ router.post('/register',
     utilities.handleErrors(accountsController.registerAccount))
 
 //Add error handling middleware
-router.use((err, req, res, next) => {
-    handleErrors(err, req, res);
-});
+// router.use((err, req, res, next) => {
+//     handleErrors(err, req, res);
+// });
 
 
 // Process the login attempt
@@ -38,4 +38,21 @@ router.post(
     //   res.status(200).send('login process')
     // }
   )
+
+
+ //Process the logout attempt
+ router.get('/logout', utilities.handleErrors(accountsController.logout)); 
+
+
+//Process to show form of account update
+router.get('/account-update', utilities.checkLogin, accountsController.showAccountUpdate);
+
+//Route to process udpate
+router.post('/account/account-update',
+    regValidate.updateAccountRules(),
+    handleErrors(accountsController.updateAccountController)
+);
+
+router.post('/change-password', utilities.checkLogin, utilities.handleErrors(accountsController.changePassword));
+
 module.exports = router;

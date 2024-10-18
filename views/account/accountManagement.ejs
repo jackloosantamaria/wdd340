@@ -1,12 +1,24 @@
 <h1>Account Management</h1>
-        <div class="flash-message">
-            <% if (flashMessage) { %>
-                <p><%= flashMessage %></p>
-            <% } %>
-        </div>
-        <div class="error-message">
-            <% if (error) { %>
-                <p><%= error %></p>
-            <% } %>
-        </div>
-        <p>You're logged in.</p>
+<div class="flash-message">
+    <% if (flashMessage) { %>
+        <p><%= flashMessage %></p>
+    <% } %>
+</div>
+<div class="error-message">
+    <% if (error) { %>
+        <p><%= error %></p>
+    <% } %>
+</div>
+
+<h2>Welcome <%= locals.accountData.account_firstname %></h2>
+
+<p>You're logged in.</p>
+
+<a href="/account/account-update">Edit Account Information</a>
+
+<% if (locals.accountData.account_type === 'Client') { %>
+    <p>You do not have access to inventory mangament features.</p>
+    <% } else { %>
+        <h3>Inventory Management</h3>
+        <a href="/inv" class="btn">Inventory Management</a>
+<% } %>

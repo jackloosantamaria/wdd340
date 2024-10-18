@@ -20,13 +20,13 @@ router.get("/error500", (req, res, next) =>{
 })
 
 //New routes for adding classifications
-router.get('/', invController.buildManagement);
+router.get('/', utilities.checkLogin, utilities.checkAccountType, invController.buildManagement);
 
 router.get("/add-classification", utilities.handleErrors(invController.addClassification));
-router.post("/add-classification", utilities.handleErrors(invController.processAddClassification));
+router.post("/add-classification", utilities.checkLogin, utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.processAddClassification));
 
 router.get("/add-inventory", utilities.handleErrors(invController.addInventory));
-router.post("/add-inventory", utilities.handleErrors(invController.processAddInventory));
+router.post("/add-inventory", utilities.checkLogin, utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.processAddInventory));
 
 router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView));
 router.post("/update/", utilities.handleErrors(invController.updateInventory));
@@ -39,5 +39,8 @@ router.get("/delete/:inv_id", utilities.handleErrors(invController.confirmDelete
 //New route to handle deletion
 
 router.post("/delete/:inv_id", utilities.handleErrors(invController.processDelete));
+
+
+
 
 module.exports = router;

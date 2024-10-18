@@ -6,6 +6,13 @@ const invCont = {}
 //function to create Build Management
 
 invCont.buildManagement = async (req, res) =>{
+  console.log("User Session:", req.session.user);
+  const user = req.session.user
+  if (!user || (user.account_type !== 'Admin' && user.account_type !== 'Employee')){
+    req.flash('error', 'You do not have permission to access this page.');
+    return res.redirect('/account/login')
+  }
+
   const nav = await utilities.getNav();
 
   const classificationSelect = await utilities.buildClassificationList()
@@ -16,6 +23,8 @@ invCont.buildManagement = async (req, res) =>{
     classificationSelect,
     errors: null
   })
+
+  
 }
 
 //Function to show view of add classification

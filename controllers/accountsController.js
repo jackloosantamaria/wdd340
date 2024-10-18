@@ -96,7 +96,7 @@ async function accountLogin(req, res) {
   
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
-   res.status(400).render("account/logins", {
+   return res.status(400).render("account/logins", {
     title: "Login",
     nav,
     errors: null,
@@ -110,7 +110,11 @@ async function accountLogin(req, res) {
 
    if (isMatch){
    delete accountData.account_password //remove password for security
-   const accessToken = jwt.sign({id: accountData.account_id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+   req.session.user = accountData;
+   const accessToken = jwt.sign(
+    {id: accountData.account_id,
+     account_type: accountData.account_type
+    }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
   
   res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
      
@@ -166,6 +170,27 @@ async function accountLogin(req, res) {
   // }
  }
 
+
+ /**********************************
+  * Process logout request
+  * *******************************/
+
+async function logout(req, res) {
+  req.flash("notice", "You have successfully closed session.");
+  req.session.destroy(() =>{
+    return res.redirect("/");
+  })
+}
+
+
+
+
+
+
+
+
+
+
  /* ****************************************
  *  Get Account Management View
  * ************************************ */
@@ -179,4 +204,89 @@ async function getAccountManagementView(req, res) {
   });
 }
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, getAccountManagementView};
+
+//show form to update account
+async function showAccountUpdate(req, res){
+  let nav = await utilities.getNav();
+  const accountData = req.session.user;
+  res.render("account/account-update", {
+    title: "Update Account",
+    nav,
+    accountData,
+    flashMessage: req.flash('flashMessage'),
+    error: req.flash('error')
+  });
+}
+
+//process update of account
+async function updateAccountController(req, res) {
+  const {account_id, account_firstname, account_lastname, account_email} = req.body;
+
+  try {
+  const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email);
+  console.log(updateResult);
+  if (updateResult){
+    
+    req.flash('notice', 'Account updated successfully.');
+    res.redirect('/account/');
+
+  }else{
+    req.flash('error', 'Failed to udpate account.');
+    res.redirect('/account/');
+  }
+}catch (error){
+  console.error("Error updating account:", error);
+  return res.status(500).send("Error updating account");
+}
+
+}
+
+async function changePassword(req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_password } = req.body;
+  const parsedAccountId = parseInt(account_id, 10);
+
+  console.log("account_id from form: ", account_id)
+
+  let hashedPassword;
+  try {
+      hashedPassword = await bcrypt.hash(account_password,10);
+      console.log("Hashed Password: ", hashedPassword);
+  } catch (error) {
+    console.error("Error hashing password: ", error);
+    req.flash("flashMessage", "There was an error changing your password.");
+    return res.status(500).render("account/account-update", {
+      title: "Update Account",
+      nav,
+      error: null,
+    });
+  }
+
+  const updateResult = await accountModel.updatePassword(parsedAccountId, hashedPassword);
+
+  if (updateResult){
+    req.flash("flashMessage", "Password has been successfully updated.");
+    return res.redirect('/account/account-update');
+  }else{
+    req.flash("flashMessage", "Change not done.");
+    return res.status(501).render("account/account-update",{
+      title: "Update Account",
+      nav,
+      error: null,
+    });
+  }
+}
+
+
+//Handle logout
+function logout (req,res){
+  req.flash('notice', 'You have been successfully logged out.');
+  req.session.destroy(() =>{
+    res.clearCookie('jwt');
+    res.redirect('/');
+  });
+  
+}
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, getAccountManagementView, logout, updateAccountController, showAccountUpdate, changePassword, logout};

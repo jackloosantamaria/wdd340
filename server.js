@@ -29,10 +29,6 @@ app.set("layout", "./layouts/layout") // not at views root
 
 
 
-
-
-
-
 /**************************
  * 
  * 
@@ -63,7 +59,11 @@ app.use(function(req, res, next){
   next()
 })
 
-
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.user ? true : false;
+  res.locals.accountData = req.session.user || {};
+  next();
+})
 
 
 
@@ -86,6 +86,9 @@ app.use("/account", accountRoute);
 app.get("/", baseController.buildHome)
 app.use("/inv", inventoryRoute)
 // app.get("/", utilities.handleErrors(baseController.buildHome));
+
+
+
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

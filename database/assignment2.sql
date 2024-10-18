@@ -47,7 +47,7 @@ SET inv_thumbnail = REPLACE(inv_thumbnail, 'images/', 'images/vehicles/'),
 -- account_firstname: Happy
 -- account_lastname: Employee
 -- account_email: happy@340.edu
--- account_password: I@mAnEmpl0y33
+-- account_password: I@mAnEmpl0y33 new password: Hello123456789#
 -- account_firstname: Manager
 -- account_lastname: User
 -- account_email: manager@340.edu

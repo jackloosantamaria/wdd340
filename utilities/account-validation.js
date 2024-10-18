@@ -152,4 +152,25 @@ validate.checkLoginData = async (req, res, next) => {
 //   next()
 // }
   
+validate.updateAccountRules = () =>{
+  return [
+    body('account_firstname')
+        .trim()
+        .notEmpty()
+        .withMessage('First name is required.'),
+
+    body('account_lastname')
+        .trim()
+        .notEmpty()
+        .withMessage('Last name is required.'), 
+
+    body('account_email')
+        .trim()
+        .isEmail()
+        .withMessage('Valid email is required.')
+        .normalizeEmail(),
+];
+}
+
+
   module.exports = validate
