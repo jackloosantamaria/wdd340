@@ -196,11 +196,13 @@ async function logout(req, res) {
  * ************************************ */
 async function getAccountManagementView(req, res) {
   let nav = await utilities.getNav();
+ 
   res.render("account/accountManagement", {
       title: "Account Management",
       nav,
       flashMessage: req.flash('notice'),
       error: req.flash('error'),
+    
   });
 }
 
@@ -209,6 +211,7 @@ async function getAccountManagementView(req, res) {
 async function showAccountUpdate(req, res){
   let nav = await utilities.getNav();
   const accountData = req.session.user;
+  console.log('Account Data in showAccountUpdate:', accountData);
   res.render("account/account-update", {
     title: "Update Account",
     nav,
@@ -288,5 +291,33 @@ function logout (req,res){
   
 }
 
+async function updateProfileImage(req, res) {
+  const {account_id, account_image} = req.body;
+  console.log("Received data:", req.body);
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, getAccountManagementView, logout, updateAccountController, showAccountUpdate, changePassword, logout};
+  try{
+    const updateResult = await accountModel.updateProfileImage(account_id, account_image);
+    console.log(updateResult);
+    if (updateResult){
+      req.flash('notice', 'Profile image updated successfully.');
+      const updatedAccountData = await accountModel.getAccountById(account_id);
+      req.session.user = updatedAccountData;
+      console.log('Account Data:', req.session.user);
+      res.redirect('/account/');
+    }else{
+      req.flash('error', 'Failed to update profile image.');
+      res.redirect('/account/account-update');
+    }
+  }catch(error){
+    console.error("Error updating profile image: ", error);
+    req.flash('error', 'Error updating profile image.');
+    return res.status(500).render("account/account-upgrade", {
+      title: "Update Account",
+      nav: await utilities.getNav(),
+      error: req.flash('error')
+    })
+  }
+}
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, getAccountManagementView, logout, updateAccountController, showAccountUpdate, changePassword, logout, updateProfileImage};

@@ -237,3 +237,8 @@ VALUES   (
     'White',
     5
   );
+
+  --creating account-image column in public.account
+
+  ALTER TABLE public.account
+ADD COLUMN account_image VARCHAR;

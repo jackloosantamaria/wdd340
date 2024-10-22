@@ -47,6 +47,9 @@ router.post(
 //Process to show form of account update
 router.get('/account-update', utilities.checkLogin, accountsController.showAccountUpdate);
 
+//Route to process updating the profile image
+router.post('/update-profile-image', utilities.checkLogin, utilities.handleErrors(accountsController.updateProfileImage));
+
 //Route to process udpate
 router.post('/account/account-update',
     regValidate.updateAccountRules(),

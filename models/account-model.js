@@ -68,4 +68,38 @@ async function updatePassword(account_id, hashedPassword) {
   await pool.query(sql, [hashedPassword, account_id]);
 }
 
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, updatePassword}
+
+/******************************
+ * Update Profile Image URL
+*******************************/
+async function updateProfileImage(account_id, account_image) {
+  try{
+    const sql = "UPDATE public.account SET account_image = $1 WHERE account_id = $2 RETURNING *";
+    const values = [account_image, account_id];
+    const result = await pool.query(sql, values);
+    return result.rowCount;
+  }catch(error){
+    console.error("Error updating profile image: ", error);
+    throw error;
+  }
+}
+
+
+async function getAccountById(account_id) {
+  
+  try {
+    const result = await pool.query(
+      'SELECT account_id, account_firstname, account_lastname, account_email, account_image, account_type FROM account WHERE account_id = $1',
+      [account_id]
+    );
+    return result.rows[0]; 
+  } catch (error) {
+    console.error("Error retrieving account by ID: ", error);
+    throw error; 
+  }
+}
+
+
+
+
+  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, updatePassword, updateProfileImage, getAccountById}

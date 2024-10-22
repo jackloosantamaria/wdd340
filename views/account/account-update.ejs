@@ -24,6 +24,17 @@
     <button type="submit">Update Account</button>
 </form>
 
+<h2>Profile Image Update</h2>
+<form action="/account/update-profile-image" method="POST">
+    <label for="account_image">Profile Image</label>
+    <input type="text" id="account_image" name="account_image" value="<%= locals.accountData.account_image %>" placeholder="Enter image URL only" required>
+
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+    <button type="submit">Update Profile Image</button>
+</form>
+
+
 <h2>Change Password</h2>
 <form action="/account/change-password" method="POST">
     <p>Enter a new password. This will change your current password. 

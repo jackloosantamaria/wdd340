@@ -14,6 +14,15 @@
 
 <p>You're logged in.</p>
 
+<% if (locals.accountData.account_image) { %>
+    <div class="profile-image">
+        <img src="<%= locals.accountData.account_image %>" alt="Profile Image" >
+    </div>
+    <% } else { %>
+    <p>Image URL: <%= locals.accountData.account_image %></p>
+    <p>No profile image available.</p>
+<% } %>
+
 <a href="/account/account-update">Edit Account Information</a>
 
 <% if (locals.accountData.account_type === 'Client') { %>
