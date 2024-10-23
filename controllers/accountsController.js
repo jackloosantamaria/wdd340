@@ -175,12 +175,12 @@ async function accountLogin(req, res) {
   * Process logout request
   * *******************************/
 
-async function logout(req, res) {
-  req.flash("notice", "You have successfully closed session.");
-  req.session.destroy(() =>{
-    return res.redirect("/");
-  })
-}
+// async function logout(req, res) {
+//   req.flash("notice", "You have successfully closed session.");
+//   req.session.destroy(() =>{
+//     return res.redirect("/");
+//   })
+// }
 
 
 
